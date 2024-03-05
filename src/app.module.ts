@@ -2,21 +2,19 @@ import { Module } from '@nestjs/common';
 import { AppController } from './app.controller';
 import { AppService } from './app.service';
 import { TypeOrmModule } from '@nestjs/typeorm';
-import { ItemEntity } from './modules/item/entity/item.entity';
+import * as DataSource from './config/typeorm.config';
+import { ConfigModule, ConfigService } from '@nestjs/config';
 
 @Module({
   imports: [
-    TypeOrmModule.forRoot({
-      type: 'postgres',
-      host: 'localhost',
-      port: 5432,
-      username: 'postgres',
-      password: 'S3cret',
-      database: 'wishlist',
-      entities: [ItemEntity],
-      synchronize: false,
+    TypeOrmModule.forRoot(DataSource.typeOrmConfig),
+    ConfigModule.forRoot({ envFilePath: '.env.dev', isGlobal: true }),
+    TypeOrmModule.forRootAsync({
+      imports: [ConfigModule],
+      inject: [ConfigService],
     }),
   ],
+
   controllers: [AppController],
   providers: [AppService],
 })
