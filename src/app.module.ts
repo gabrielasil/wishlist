@@ -5,8 +5,6 @@ import { TypeOrmModule } from '@nestjs/typeorm';
 import { ConfigModule } from '@nestjs/config';
 import { DatabaseConfiguration } from './config/typeorm.config';
 import { CategoryModule } from './modules/category/category.module';
-import { ItemController } from './modules/item/item.controller';
-import { ItemService } from './modules/item/item.service';
 import { ItemModule } from './modules/item/item.module';
 
 @Module({
